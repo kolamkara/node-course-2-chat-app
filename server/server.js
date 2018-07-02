@@ -13,11 +13,22 @@ var io=socketIO(server);
 app.use(express.static(publicPath));
 
 io.on('connection',(socket)=>{
-  console.log('new user connected');
+  console.log('New user connected');
+
+  socket.emit('newMessage',{
+    from: 'John',
+    text: 'See you then',
+    createdAt:12335
+  });
+
+  socket.on('createMessage',(newMessage)=>{
+    console.log('createMessage',newMessage);
+  });
 
   socket.on('disconnect',()=>{
     console.log('User was disconnected');
   });
+
 });
 
 server.listen(port,()=>{
